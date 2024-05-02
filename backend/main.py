@@ -7,7 +7,7 @@ from models import Contact
   # localhost:5000/create_contact
      # Request: type: GET, POST; json{}
      # Response: status: 200(success), 404(Not found) etc...; json{}
-@app.route("/contacts", method=["GET"])
+@app.route("/contacts", methods=["GET"])
 def get_contacts():
     contacts = Contact.query.all()
     json_contacts = list(map(lambda x:x.to_json(), contacts))
