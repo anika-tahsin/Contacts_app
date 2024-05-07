@@ -29,17 +29,51 @@ def create_contacts():
         )
     
     new_contact = Contact(first_name=first_name, last_name=last_name, email=email, phone=phone)
-           
+    try:
+        db.session.add(new_contact)
+        db.session.commit()
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 400
     
-    
+    return jsonify({"message": "User Created Successfully"}), 201
 
 # update : any
     # Request: PUT, PATCH
+ 
+app.route("/update_contact/<int:user_id>", methods= ["PATCH"])
+def update_contact(user_id):
+    contact = Contact.query.get(user_id)
+    
+    if not contact:
+        return jsonify({"message": "User not found"}), 404
+    
+    data = request.json
+    contact.first_name = data.get("firstName", contact.first_name)
+    contact.last_name = data.get("lastName", contact.last_name)
+    contact.email = data.get("email", contact.email)
+    contact.phone = data.get("phone", contact.phone)
+
+
+    db.session.commit()
+    
+    return jsonify ({"message": "User updated"}), 200
+
 
 # delete: first_name, last_name, email, phone
     # Request: DELETE
-
-
+app.route("/delete_contact/<int:user_id>", methods= ["DELETE"])
+def delete_contact(user_id):
+    contact = Contact.query.get(user_id)
+    
+    if not contact:
+        return jsonify({"message": "User not found"}), 404
+     
+     
+    db.session.add(new_contact)
+    db.session.commit()
+    
+    return jsonify({"message": "User deleted"}), 200 
 
 if __name__ == "__main__":
     with app.app_context():
