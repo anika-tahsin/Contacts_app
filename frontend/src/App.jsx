@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
-import response from React
 
 function App() {
-  const [contacts,setContacts] = useState([])
+  const [contacts, setContacts] = useState([])
+
+  useEffect (() => {
+    fetchConatacts()
+  }, [])
 
 
   const fetchConatacts = async () => {
