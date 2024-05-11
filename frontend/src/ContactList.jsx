@@ -1,10 +1,10 @@
 import React from "react";
 
-const ContactList = ( {contacts}) => {
+const ContactList = ({ contacts }) => {
     return <div>
         <h2> Contacts </h2>
         <table>
-            <head>
+            <thead>
                 <tr>
                     <th>First Name</th>
                     <th>Last Name</th>
@@ -12,8 +12,23 @@ const ContactList = ( {contacts}) => {
                     <th>Phone</th>
                     <th>Actions</th>
                 </tr>
-            </head>
-            <tbody></tbody>
+            </thead>
+            <tbody>
+                {contacts.map((contact) => (
+                    <tr key={contact.id}>
+                        <td>{contact.firstName}</td>
+                        <td>{contact.lastName}</td>
+                        <td>{contact.email}</td>
+                        <td>{contact.phone}</td>
+                        <td>
+                            <button>Update</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                ) )}
+            </tbody>
         </table>
     </div>
 }
+
+export default ContactList
