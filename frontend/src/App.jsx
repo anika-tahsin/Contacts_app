@@ -3,10 +3,10 @@ import ContactList  from './ContactList'
 import './App.css'
 
 function App() {
-  const [contacts, setContacts] = useState([{"firstName": "Anika", "lastName": "Tahsin", "email": "email", id:1}])
+  const [contacts, setContacts] = useState([])
 
   useEffect (() => {
-    //fetchConatacts()
+    fetchConatacts()
   }, [])
 
 
