@@ -15,8 +15,8 @@ def get_contacts():
 
 # read/get: first_name, last_name, email, phone
   # Request: 
-@app.route("/create_contacts", methods=["POST"])
-def create_contacts():
+@app.route("/create_contact", methods=["POST"])
+def create_contact():
     first_name = request.json.get("firstname")
     last_name = request.json.get("lastname")
     email = request.json.get("email")
