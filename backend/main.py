@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import Flask, request, jsonify
 from config import app, db
 from models import Contact
 
@@ -17,18 +17,20 @@ def get_contacts():
   # Request: 
 @app.route("/create_contact", methods=["POST"])
 def create_contact():
-    first_name = request.json.get("firstname")
-    last_name = request.json.get("lastname")
+    first_name = request.json.get("firstName")
+    last_name = request.json.get("lastName")
     email = request.json.get("email")
     phone = request.json.get("phone")
 
     if not first_name or not last_name or not email or not phone:
         return (
-            jsonify({"message": "You must include first name, last name, email and phone number"}), 
-        400,
+            jsonify({"message": "You must include first name, last name, \
+                      email and phone number"}), 400,
         )
+
     
-    new_contact = Contact(first_name=first_name, last_name=last_name, email=email, phone=phone)
+    new_contact = Contact(first_name=first_name, last_name=last_name, \
+                          email=email, phone=phone)
     try:
         db.session.add(new_contact)
         db.session.commit()
@@ -69,8 +71,7 @@ def delete_contact(user_id):
     if not contact:
         return jsonify({"message": "User not found"}), 404
      
-     
-    db.session.add(contact)
+    db.session.delete(contact)
     db.session.commit()
     
     return jsonify({"message": "User deleted"}), 200 
@@ -78,5 +79,4 @@ def delete_contact(user_id):
 if __name__ == "__main__":
     with app.app_context():
         db.create_all() 
-        
     app.run(debug=True)

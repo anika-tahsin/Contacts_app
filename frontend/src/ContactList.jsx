@@ -1,23 +1,26 @@
-import React from "react"
+//import React from "react";
+import PropTypes from 'prop-types';
 
 const ContactList = ({ contacts, updateContact, updateCallback}) => {
 
-    const onDelete = async () => {
+    const onDelete = async (id) => {
         try{
             const options = {
                 method: "DELETE"
             }
             const response = await fetch (`http://127.0.0.1/delete_contact/${id}`, options)
-            if (response.status == 200 ){
+            if (response.status === 200 ){
                 updateCallback()
             } else {
-                console.error("Failed to delete")
+                console.error("Failed to delete");
             } 
         } catch (error) {
             alert (error)
         }
     }
-    return <div>
+    
+    return (
+    <div>
         <h2> Contacts </h2>
         <table>
             <thead>
@@ -30,7 +33,7 @@ const ContactList = ({ contacts, updateContact, updateCallback}) => {
                 </tr>
             </thead>
             <tbody>
-                {contacts.map((contact) => (
+                {contacts.map ((contact) => (
                     <tr key={contact.id}>
                         <td>{contact.firstName}</td>
                         <td>{contact.lastName}</td>
@@ -38,13 +41,26 @@ const ContactList = ({ contacts, updateContact, updateCallback}) => {
                         <td>{contact.phone}</td>
                         <td>
                             <button onClick={() => updateContact(contact)}>Update</button>
-                            <button onClick={() => updateContact(contact.id)}>Delete</button>
+                            <button onClick={() => onDelete(contact.id)}>Delete</button>
                         </td>
                     </tr>
-                ) )}
+                ))}
             </tbody>
         </table>
     </div>
+    );
 }
+
+ContactList.propTypes = {
+    contacts: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        firstName: PropTypes.string.isRequired,
+        lastName: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+        phone: PropTypes.string
+    })).isRequired,
+    updateContact: PropTypes.func.isRequired,
+    updateCallback: PropTypes.func.isRequired
+};
 
 export default ContactList
