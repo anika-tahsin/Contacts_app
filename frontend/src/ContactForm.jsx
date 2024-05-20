@@ -9,10 +9,10 @@ const ContactForm = ({existingContact = {}, updateCallback}) => {
 
 
     const updating = Object.entries(existingContact).length !== 0
+    console.log("existingContact: ",existingContact);    
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        
         const data = {
             firstName,
             lastName,
@@ -37,7 +37,7 @@ const ContactForm = ({existingContact = {}, updateCallback}) => {
       }
     */}
 
-        const url = "http://127.0.0.1:5000/" +(updating ? 'update_contact/${existingContact.id}' : "create_contact");
+        const url = "http://127.0.0.1:5000/" +(updating ? `update_contact/${existingContact.id}` : "create_contact");
         const options = {
             method: updating? "PATCH" : "POST", 
             headers: {
